@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/stationsFragment"
+        android:title="@string/stations" />
+
+    <item
+        android:id="@+id/myTripsFragment"
+        android:title="@string/my_trips" />
+
+    <item
+        android:id="@+id/profileFragment"
+        android:title="@string/profile" />
+
+</menu>
