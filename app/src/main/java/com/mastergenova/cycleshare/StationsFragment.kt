@@ -45,16 +45,12 @@ class StationsFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
-        val sydney = LatLng(-33.852, 151.211)
-        /*googleMap?.addMarker(
-            MarkerOptions()
-                .position(LatLng(0.0, 0.0))
-                .title("Marker")
-        )*/
-        googleMap?.apply {
-            val sydney = LatLng(-33.852, 151.211)
-            moveCamera(CameraUpdateFactory.newLatLng(sydney))
-        }
+        val seatle = LatLng(47.62139, -122.33040)
+        googleMap?.addMarker(MarkerOptions()
+                .position(seatle)
+                .title("Marker in Seatle")
+        )
+        googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(seatle, 10f))
     }
 
     companion object {
