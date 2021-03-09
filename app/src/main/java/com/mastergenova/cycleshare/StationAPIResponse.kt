@@ -8,9 +8,9 @@ class StationsAPIResponse(
     @SerializedName("name")
     val name:String,
     @SerializedName("lon")
-    val lon:Float,
+    val lon:Double,
     @SerializedName("lat")
-    val lat:Float,
+    val lat:Double,
     @SerializedName("current_dockCount")
     val currentDockCount:Int
 ) {

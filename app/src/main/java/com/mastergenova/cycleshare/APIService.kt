@@ -1,10 +1,10 @@
 package com.mastergenova.cycleshare
 
-import retrofit2.Call
+import io.reactivex.rxjava3.core.Observable
 import retrofit2.http.GET
 
 interface APIService {
 
     @GET(Constants.STATIONS)
-    fun getStations(): Call<StationsAPIResponse>
+    fun getStations(): Observable<List<StationsAPIResponse>>
 }

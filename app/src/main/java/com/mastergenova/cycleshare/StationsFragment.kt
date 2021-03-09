@@ -5,9 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.mastergenova.cycleshare.adapters.StationAdapter
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.kotlin.subscribeBy
+import io.reactivex.rxjava3.kotlin.toObservable
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,6 +31,11 @@ class StationsFragment : Fragment(), OnMapReadyCallback {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    lateinit var rvStations:RecyclerView
+    lateinit var adapter: StationAdapter
+    lateinit var layoutManager: RecyclerView.LayoutManager
+    lateinit var googleMap: GoogleMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,16 +54,59 @@ class StationsFragment : Fragment(), OnMapReadyCallback {
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        rvStations = root.findViewById(R.id.statios_recycler_view)
+        rvStations.setHasFixedSize(true)
+
+        layoutManager = LinearLayoutManager(context)
+        rvStations.layoutManager = layoutManager
+
+        adapter = StationAdapter()
+        rvStations.adapter = adapter
+
+        fetchStations()
+
         return root
     }
 
-    override fun onMapReady(googleMap: GoogleMap?) {
+    override fun onMapReady(googleMap: GoogleMap) {
         val seatle = LatLng(47.62139, -122.33040)
-        googleMap?.addMarker(MarkerOptions()
-                .position(seatle)
-                .title("Marker in Seatle")
+
+        this.googleMap = googleMap
+        this.googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(seatle, 10f))
+    }
+
+    private fun fetchStations(){
+        APIClient()
+                .getAPIService()
+                .getStations()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy (
+                        onNext = { response ->
+                            adapter.setDataset(response)
+                            addMarkersToMap(response)
+                        },
+                        onError = {
+                            e -> e.printStackTrace()
+                        }
+                )
+    }
+
+    private fun addMarkersToMap(stationsList: List<StationsAPIResponse>){
+        var observable: Observable<StationsAPIResponse> = stationsList.toObservable()
+
+        observable.subscribeBy (
+            onNext = {
+                googleMap?.addMarker(MarkerOptions()
+                        .position(LatLng(it.lat, it.lon))
+                        .title(it.name)
+                )
+            },
+            onError = {
+                e -> e.printStackTrace()
+            }
         )
-        googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(seatle, 10f))
     }
 
     companion object {
