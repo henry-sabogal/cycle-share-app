@@ -2,14 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/stationsFragment"
-        android:title="@string/stations" />
+        android:title="@string/stations"
+        android:icon="@drawable/baseline_manage_search_white_36"/>
 
     <item
         android:id="@+id/myTripsFragment"
-        android:title="@string/my_trips" />
+        android:title="@string/my_trips"
+        android:icon="@drawable/baseline_directions_bike_white_36"/>
 
     <item
         android:id="@+id/profileFragment"
-        android:title="@string/profile" />
+        android:title="@string/profile"
+        android:icon="@drawable/baseline_person_white_36"/>
 
 </menu>

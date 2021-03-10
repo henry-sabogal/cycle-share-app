@@ -5,10 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.mastergenova.cycleshare.adapters.StationAdapter
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -27,7 +29,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [StationsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class StationsFragment : Fragment(), OnMapReadyCallback {
+class StationsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -74,6 +76,11 @@ class StationsFragment : Fragment(), OnMapReadyCallback {
 
         this.googleMap = googleMap
         this.googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(seatle, 10f))
+        this.googleMap?.setOnInfoWindowClickListener(this)
+    }
+
+    override fun onInfoWindowClick(marker: Marker?) {
+        Toast.makeText(context, marker?.title, Toast.LENGTH_LONG).show()
     }
 
     private fun fetchStations(){
@@ -101,6 +108,7 @@ class StationsFragment : Fragment(), OnMapReadyCallback {
                 googleMap?.addMarker(MarkerOptions()
                         .position(LatLng(it.lat, it.lon))
                         .title(it.name)
+                        .snippet("Tap to get information")
                 )
             },
             onError = {
