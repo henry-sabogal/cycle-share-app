@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'com.google.secrets_gradle_plugin' version '0.5'
+    id  'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -31,6 +32,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    sourceSets {
+        getByName("main").java.srcDirs("build/generated/source/navigation-args")
     }
 }
 

@@ -19,6 +19,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.kotlin.toObservable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.PublishSubject
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -64,7 +65,15 @@ class StationsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowC
         layoutManager = LinearLayoutManager(context)
         rvStations.layoutManager = layoutManager
 
-        adapter = StationAdapter()
+        val onClickStationSubject = PublishSubject.create<Pair<View, StationsAPIResponse?>>()
+        onClickStationSubject.filter {
+            it.second != null
+        }.subscribeBy {
+            val action = StationsFragmentDirections.actionStationsFragmentToBikesFragment(it.second?.id!!)
+            this.findNavController().navigate(action);
+        }
+
+        adapter = StationAdapter(context, onClickStationSubject)
         rvStations.adapter = adapter
 
         fetchStations()
@@ -82,7 +91,9 @@ class StationsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowC
 
     override fun onInfoWindowClick(marker: Marker?) {
         Toast.makeText(context, marker?.title, Toast.LENGTH_LONG).show()
-        this.findNavController().navigate(R.id.action_stationsFragment_to_bikesFragment);
+
+        val action = StationsFragmentDirections.actionStationsFragmentToBikesFragment(1)
+        this.findNavController().navigate(action);
     }
 
     private fun fetchStations(){

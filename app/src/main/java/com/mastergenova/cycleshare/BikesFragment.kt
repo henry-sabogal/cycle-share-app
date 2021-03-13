@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.navArgs
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +23,8 @@ class BikesFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private val args:BikesFragmentArgs by navArgs()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -33,6 +36,10 @@ class BikesFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+        val id = args.idStation
+        System.out.println("Id Station")
+        System.out.println(id)
+
         activity?.actionBar?.setDisplayHomeAsUpEnabled(true)
         return inflater.inflate(R.layout.fragment_bikes, container, false)
     }

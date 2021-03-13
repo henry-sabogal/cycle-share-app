@@ -28,5 +28,10 @@
         android:id="@+id/bikesFragment"
         android:name="com.mastergenova.cycleshare.BikesFragment"
         android:label="fragment_bikes"
-        tools:layout="@layout/fragment_bikes" />
+        tools:layout="@layout/fragment_bikes" >
+        <argument
+            android:name="idStation"
+            app:argType="integer"
+            android:defaultValue="1" />
+    </fragment>
 </navigation>
