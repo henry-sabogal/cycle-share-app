@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.navArgs
@@ -79,6 +80,11 @@ class BikesFragment : Fragment(), OnMapReadyCallback {
 
         adapter = BikesByStationAdapter(context)
         rvBikes.adapter = adapter
+
+        val btnBack = root.findViewById<ImageButton>(R.id.btnBack)
+        btnBack.setOnClickListener {
+            activity?.onBackPressed()
+        }
 
         return root
     }
