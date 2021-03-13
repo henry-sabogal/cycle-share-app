@@ -6,10 +6,45 @@
     android:orientation="vertical"
     tools:context=".BikesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.fragment.app.FragmentContainerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Bikes fragment" />
+        android:layout_height="300dp"
+        android:id="@+id/map_station"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvNameStation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/title"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/tvDockCountStation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/subtitle"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bikes_recycler_view"
+        android:scrollbars="vertical"
+        android:padding="16dp"
+        android:orientation="vertical" />
 
 </LinearLayout>

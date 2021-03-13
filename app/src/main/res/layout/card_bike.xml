@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_bike_view"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:layout_marginBottom="10dp"
+    android:padding="16dp"
+    app:cardCornerRadius="4dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:src="@drawable/baseline_directions_bike_white_36"
+            android:background="@color/title"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingLeft="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvNameBike"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/title"
+                android:text="Prueba"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/tvStateBike"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/subtitle"
+                android:text="Prueba"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
