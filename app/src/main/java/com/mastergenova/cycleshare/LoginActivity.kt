@@ -36,8 +36,10 @@ class LoginActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         val account = GoogleSignIn.getLastSignedInAccount(this)
-        System.out.println("User authenticated")
-        System.out.println(account?.email)
+        if(account != null){
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -53,6 +55,8 @@ class LoginActivity : AppCompatActivity() {
             val account = completedTask.getResult(ApiException::class.java)
             System.out.println("SignInResult")
             System.out.println(account?.email)
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }catch (e:ApiException){
             Toast.makeText(this, "SignIn result failed, code: " + e.statusCode, Toast.LENGTH_LONG).show()
         }

@@ -6,4 +6,6 @@
     <string name="stations">Stations</string>
     <string name="my_trips">My Trips</string>
     <string name="profile">Profile</string>
+
+    <string name="sign_out">Sign Out</string>
 </resources>

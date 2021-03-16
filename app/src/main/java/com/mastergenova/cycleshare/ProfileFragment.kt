@@ -5,6 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.fragment.app.activityViewModels
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.mastergenova.cycleshare.models.UserModel
+import com.mastergenova.cycleshare.utils.DownloadImageTask
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +30,12 @@ class ProfileFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    lateinit var displayName: TextView
+    lateinit var email: TextView
+    lateinit var photo: ImageView
+
+    private val userModel: UserModel by activityViewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -33,8 +48,37 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        val root = inflater.inflate(R.layout.fragment_profile, container, false)
+
+        displayName = root.findViewById(R.id.tvDisplayName)
+        email = root.findViewById(R.id.tvEmail)
+        photo = root.findViewById(R.id.imvPhotoProfile)
+
+        val signOut = root.findViewById<Button>(R.id.btnSignOut)
+        signOut.setOnClickListener {
+            userModel.logout(true)
+        }
+
+        getUserInfo()
+        return root
+    }
+
+    private fun getUserInfo(){
+        val acct = GoogleSignIn.getLastSignedInAccount(activity)
+        if(acct != null){
+            displayName.text = acct.displayName
+            email.text = acct.email
+            System.out.println("Image profileeeeeeeeeeeeeeeeeeee")
+            System.out.println(acct.photoUrl)
+            getPhotoUser(acct.photoUrl.toString())
+        }
+    }
+
+    private fun getPhotoUser(url: String){
+        if(url != null){
+            val imageTask = DownloadImageTask(photo, context)
+            imageTask.execute(url)
+        }
     }
 
     companion object {
