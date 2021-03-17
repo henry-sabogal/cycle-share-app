@@ -8,4 +8,12 @@
     <string name="profile">Profile</string>
 
     <string name="sign_out">Sign Out</string>
+    <string name="book_bike_title">Book a Bike</string>
+
+    <string name="station_title">Station: </string>
+    <string name="bike_title">Bike: </string>
+
+    <string name="date">Date:</string>
+    <string name="to_station">To Station:</string>
+    <string name="book_bike">Book Bike</string>
 </resources>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.mastergenova.cycleshare.adapters.StationAdapter
+import com.mastergenova.cycleshare.models.UserModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.kotlin.subscribeBy
@@ -35,6 +37,8 @@ class StationsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowC
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    private val userModel: UserModel by activityViewModels()
 
     lateinit var rvStations:RecyclerView
     lateinit var adapter: StationAdapter
@@ -69,6 +73,7 @@ class StationsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowC
         onClickStationSubject.filter {
             it.second != null
         }.subscribeBy {
+            userModel.selectStation(it.second!!)
             val action = StationsFragmentDirections.actionStationsFragmentToBikesFragment(it.second?.id!!)
             this.findNavController().navigate(action);
         }

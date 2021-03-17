@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mastergenova.cycleshare.R
+import com.mastergenova.cycleshare.StationsAPIResponse
 import com.mastergenova.cycleshare.models.Bike
+import io.reactivex.rxjava3.subjects.Subject
 
-class BikesByStationAdapter (private val context: Context?): RecyclerView.Adapter<BikesByStationAdapter.ViewHolder>(){
+class BikesByStationAdapter (private val context: Context?,
+                             val onClickBikeSubject: Subject<Pair<View, Bike?>>): RecyclerView.Adapter<BikesByStationAdapter.ViewHolder>(){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private val listBikes:ArrayList<Bike> = arrayListOf()
@@ -26,6 +29,9 @@ class BikesByStationAdapter (private val context: Context?): RecyclerView.Adapte
         fun bindView(bike: Bike?){
             name.text = bike?.name
             state.text = bike?.state
+            itemView.setOnClickListener {
+                onClickBikeSubject.onNext(Pair(itemView, bike))
+            }
         }
     }
 

@@ -33,5 +33,13 @@
             android:name="idStation"
             app:argType="integer"
             android:defaultValue="1" />
+        <action
+            android:id="@+id/action_bikesFragment_to_bookBikeFragment"
+            app:destination="@id/bookBikeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/bookBikeFragment"
+        android:name="com.mastergenova.cycleshare.BookBikeFragment"
+        android:label="fragment_book_bike"
+        tools:layout="@layout/fragment_book_bike" />
 </navigation>

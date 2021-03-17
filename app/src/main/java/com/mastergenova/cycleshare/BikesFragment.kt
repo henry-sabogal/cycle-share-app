@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,10 +22,13 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.mastergenova.cycleshare.adapters.BikesByStationAdapter
+import com.mastergenova.cycleshare.models.Bike
 import com.mastergenova.cycleshare.models.BikesByStation
+import com.mastergenova.cycleshare.models.UserModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.PublishSubject
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,6 +46,7 @@ class BikesFragment : Fragment(), OnMapReadyCallback {
     private var param2: String? = null
 
     private val args:BikesFragmentArgs by navArgs()
+    private val userModel: UserModel by activityViewModels()
 
     private var idStation: Int = 0
 
@@ -78,13 +85,25 @@ class BikesFragment : Fragment(), OnMapReadyCallback {
         layoutManager = LinearLayoutManager(context)
         rvBikes.layoutManager = layoutManager
 
-        adapter = BikesByStationAdapter(context)
+        val onClickBikeSubject = PublishSubject.create<Pair<View, Bike?>>()
+        onClickBikeSubject.filter {
+            it.second != null
+        }.subscribeBy {
+            userModel.selectBike(it.second!!)
+            this.findNavController().navigate(R.id.action_bikesFragment_to_bookBikeFragment)
+        }
+
+        adapter = BikesByStationAdapter(context, onClickBikeSubject)
         rvBikes.adapter = adapter
 
         val btnBack = root.findViewById<ImageButton>(R.id.btnBack)
         btnBack.setOnClickListener {
             activity?.onBackPressed()
         }
+
+        userModel.selectedStation.observe(viewLifecycleOwner, Observer<StationsAPIResponse>{ station ->
+            addStationInfo(station)
+        })
 
         return root
     }
@@ -105,10 +124,8 @@ class BikesFragment : Fragment(), OnMapReadyCallback {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy (
                         onNext = { response ->
-                            System.out.println(response)
                             adapter.setDataset(response.bikes)
                             addMarker(response)
-                            addStationInfo(response)
                         },
                         onError = {
                             e -> e.printStackTrace()
@@ -135,7 +152,7 @@ class BikesFragment : Fragment(), OnMapReadyCallback {
         googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
     }
 
-    private fun addStationInfo(station: BikesByStation){
+    private fun addStationInfo(station: StationsAPIResponse){
         tvName.text = station.name
         tvDockCount.text = "Current Dock Count: " + station.currentDockCount
     }
