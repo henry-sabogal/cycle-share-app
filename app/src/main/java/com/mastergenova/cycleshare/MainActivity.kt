@@ -13,6 +13,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.mastergenova.cycleshare.models.Account
 import com.mastergenova.cycleshare.models.UserModel
 
 class MainActivity : AppCompatActivity() {
@@ -31,6 +32,19 @@ class MainActivity : AppCompatActivity() {
                 signOut()
             }
         })
+
+        getUserInfo()
+    }
+
+    private fun getUserInfo(){
+        val acct = GoogleSignIn.getLastSignedInAccount(this)
+        if(acct != null){
+            val userAccount = Account(acct.displayName,
+                                        acct.email,
+                                        acct.id,
+                                        acct.photoUrl)
+            userModel.setAccountInfo(userAccount)
+        }
     }
 
     private fun signOut() {

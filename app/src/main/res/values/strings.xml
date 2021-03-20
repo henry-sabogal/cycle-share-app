@@ -10,10 +10,16 @@
     <string name="sign_out">Sign Out</string>
     <string name="book_bike_title">Book a Bike</string>
 
-    <string name="station_title">Station: </string>
+    <string name="station_title">From Station: </string>
     <string name="bike_title">Bike: </string>
 
     <string name="date">Date:</string>
     <string name="to_station">To Station:</string>
     <string name="book_bike">Book Bike</string>
+
+    <string name="user_name_title">Name: </string>
+    <string name="email_user">Email: </string>
+
+    <string name="select_time">Select a time for the trip</string>
+    <string name="select_date">Select a date for the trip</string>
 </resources>

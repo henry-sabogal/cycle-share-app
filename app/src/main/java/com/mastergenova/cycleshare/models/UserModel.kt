@@ -8,6 +8,7 @@ class UserModel : ViewModel(){
     val signOut = MutableLiveData<Boolean>()
     val selectedStation = MutableLiveData<StationsAPIResponse>()
     val selectedBike = MutableLiveData<Bike>()
+    val userInfo = MutableLiveData<Account>()
 
     fun logout(value: Boolean){
         signOut.value = value
@@ -19,5 +20,9 @@ class UserModel : ViewModel(){
 
     fun selectBike(bike: Bike){
         selectedBike.value = bike
+    }
+
+    fun setAccountInfo(account: Account){
+        userInfo.value = account
     }
 }

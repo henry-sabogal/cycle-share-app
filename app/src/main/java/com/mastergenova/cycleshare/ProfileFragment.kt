@@ -9,9 +9,11 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.mastergenova.cycleshare.models.Account
 import com.mastergenova.cycleshare.models.UserModel
 import com.mastergenova.cycleshare.utils.DownloadImageTask
 
@@ -64,14 +66,11 @@ class ProfileFragment : Fragment() {
     }
 
     private fun getUserInfo(){
-        val acct = GoogleSignIn.getLastSignedInAccount(activity)
-        if(acct != null){
-            displayName.text = acct.displayName
-            email.text = acct.email
-            System.out.println("Image profileeeeeeeeeeeeeeeeeeee")
-            System.out.println(acct.photoUrl)
-            getPhotoUser(acct.photoUrl.toString())
-        }
+        userModel.userInfo.observe(viewLifecycleOwner, Observer<Account> { userInfo ->
+            displayName.text = userInfo.displayName
+            email.text = userInfo.email
+            getPhotoUser(userInfo.photo.toString())
+        })
     }
 
     private fun getPhotoUser(url: String){

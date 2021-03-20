@@ -5,12 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import com.mastergenova.cycleshare.models.Account
 import com.mastergenova.cycleshare.models.Bike
 import com.mastergenova.cycleshare.models.UserModel
+import com.mastergenova.cycleshare.utils.DatePickerFragment
+import com.mastergenova.cycleshare.utils.TimePickerFragment
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,11 +31,14 @@ class BookBikeFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private lateinit var tvName: TextView
+    private lateinit var tvEmail: TextView
     private lateinit var tvStationName: TextView
     private lateinit var tvBikeName: TextView
 
     private lateinit var stationSelected: StationsAPIResponse
     private lateinit var bikeSelected: Bike
+    private lateinit var account: Account
 
     private val userModel: UserModel by activityViewModels()
 
@@ -49,25 +56,59 @@ class BookBikeFragment : Fragment() {
 
         tvStationName = root.findViewById(R.id.tvNameStation)
         tvBikeName = root.findViewById(R.id.tvNameBike)
+        tvName = root.findViewById(R.id.tvDisplayName)
+        tvEmail = root.findViewById(R.id.tvEmail)
 
         val btnBack = root.findViewById<ImageButton>(R.id.btnBack)
         btnBack.setOnClickListener {
             activity?.onBackPressed()
         }
 
+        val btnSelectTime = root.findViewById<Button>(R.id.btnSelectTime)
+        btnSelectTime.setOnClickListener {
+            showTimePickerDialog()
+        }
+
+        val btnSelectDate = root.findViewById<Button>(R.id.btnSelectDate)
+        btnSelectDate.setOnClickListener {
+            showDateTimePickerDialog()
+        }
+
+        setStationInfo()
+        setBikeInfo()
+        setUserInfo()
+
+        return root
+    }
+
+    private fun setStationInfo(){
         userModel.selectedStation.observe(viewLifecycleOwner, Observer<StationsAPIResponse> { station ->
             this.stationSelected = station
             tvStationName.text = station.name
-            System.out.println("Station info:")
-            System.out.println(station.name)
         })
+    }
 
+    private fun setBikeInfo(){
         userModel.selectedBike.observe(viewLifecycleOwner, Observer<Bike> { bike ->
             this.bikeSelected = bike
             tvBikeName.text = bike.name
         })
+    }
 
-        return root
+    private fun setUserInfo(){
+        userModel.userInfo.observe(viewLifecycleOwner, Observer<Account> { account ->
+            this.account = account
+            tvName.text = account.displayName
+            tvEmail.text = account.email
+        })
+    }
+
+    private fun showTimePickerDialog(){
+        TimePickerFragment().show(childFragmentManager, "timePicker")
+    }
+
+    private fun showDateTimePickerDialog(){
+        DatePickerFragment(context).show(childFragmentManager, "datePicker")
     }
 
     companion object {
