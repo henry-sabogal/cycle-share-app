@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -102,20 +103,10 @@ class StationsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowC
     }
 
     private fun fetchStations(){
-        APIClient()
-                .getAPIService()
-                .getStations()
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy (
-                        onNext = { response ->
-                            adapter.setDataset(response)
-                            addMarkersToMap(response)
-                        },
-                        onError = {
-                            e -> e.printStackTrace()
-                        }
-                )
+        userModel.getStationsList().observe(viewLifecycleOwner, Observer<List<StationsAPIResponse>> { stations ->
+            adapter.setDataset(stations)
+            addMarkersToMap(stations)
+        })
     }
 
     private fun addMarkersToMap(stationsList: List<StationsAPIResponse>){

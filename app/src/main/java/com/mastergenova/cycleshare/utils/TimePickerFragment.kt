@@ -6,9 +6,13 @@ import android.os.Bundle
 import android.text.format.DateFormat
 import android.widget.TimePicker
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
+import com.mastergenova.cycleshare.models.UserModel
 import java.util.*
 
 class TimePickerFragment: DialogFragment(), TimePickerDialog.OnTimeSetListener {
+
+    private val userModel: UserModel by activityViewModels()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val c = Calendar.getInstance()
@@ -19,8 +23,7 @@ class TimePickerFragment: DialogFragment(), TimePickerDialog.OnTimeSetListener {
     }
 
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-        System.out.println("Hour selected")
-        System.out.println(hourOfDay)
-        System.out.println(minute)
+        val time = hourOfDay.toString() + ":" + minute.toString()
+        userModel.setTimeSelected(time)
     }
 }

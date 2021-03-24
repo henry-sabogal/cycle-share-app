@@ -153,27 +153,23 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/date"
-                android:textSize="14sp"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/teal_700"
-                />
-
-            <EditText
-                android:id="@+id/etDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:inputType="date" />
-
             <Button
                 android:id="@+id/btnSelectTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/select_time"
+                android:layout_marginTop="10dp"
+                />
+
+            <TextView
+                android:id="@+id/tvSelectedTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginTop="3dp"
+                android:textColor="@color/subtitle"
                 />
 
             <Button
@@ -181,6 +177,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/select_date"
+                android:layout_marginTop="10dp"
+                />
+
+            <TextView
+                android:id="@+id/tvSelectedDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginTop="3dp"
+                android:textColor="@color/subtitle"
+                />
+
+            <Spinner
+                android:id="@+id/stations_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:tooltipText="@string/select_station"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 />
 
             <Button

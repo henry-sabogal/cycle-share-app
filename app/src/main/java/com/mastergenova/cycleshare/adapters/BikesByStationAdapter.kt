@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mastergenova.cycleshare.R
-import com.mastergenova.cycleshare.StationsAPIResponse
 import com.mastergenova.cycleshare.models.Bike
 import io.reactivex.rxjava3.subjects.Subject
 

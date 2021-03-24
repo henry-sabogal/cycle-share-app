@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import com.mastergenova.cycleshare.adapters.SpinnerStationsAdapter
 import com.mastergenova.cycleshare.models.Account
 import com.mastergenova.cycleshare.models.Bike
 import com.mastergenova.cycleshare.models.UserModel
@@ -35,10 +37,15 @@ class BookBikeFragment : Fragment() {
     private lateinit var tvEmail: TextView
     private lateinit var tvStationName: TextView
     private lateinit var tvBikeName: TextView
+    private lateinit var spStations: Spinner
+    private lateinit var tvSelectedDate: TextView
+    private lateinit var tvSelectedTime: TextView
 
     private lateinit var stationSelected: StationsAPIResponse
     private lateinit var bikeSelected: Bike
     private lateinit var account: Account
+
+    private lateinit var adapter: SpinnerStationsAdapter
 
     private val userModel: UserModel by activityViewModels()
 
@@ -58,6 +65,9 @@ class BookBikeFragment : Fragment() {
         tvBikeName = root.findViewById(R.id.tvNameBike)
         tvName = root.findViewById(R.id.tvDisplayName)
         tvEmail = root.findViewById(R.id.tvEmail)
+        spStations = root.findViewById(R.id.stations_spinner)
+        tvSelectedDate = root.findViewById(R.id.tvSelectedDate)
+        tvSelectedTime = root.findViewById(R.id.tvSelectedTime)
 
         val btnBack = root.findViewById<ImageButton>(R.id.btnBack)
         btnBack.setOnClickListener {
@@ -78,7 +88,24 @@ class BookBikeFragment : Fragment() {
         setBikeInfo()
         setUserInfo()
 
+        fetchStations()
+
+        userModel.selectedDate.observe(viewLifecycleOwner, Observer<String>{ date ->
+            tvSelectedDate.text = date
+        })
+
+        userModel.selectedTime.observe(viewLifecycleOwner, Observer<String> { time ->
+            tvSelectedTime.text = time
+        })
+
         return root
+    }
+
+    private fun fetchStations(){
+        userModel.getStationsList().observe(viewLifecycleOwner, Observer<List<StationsAPIResponse>> { stations ->
+            adapter = SpinnerStationsAdapter(context, stations.filter { it != stationSelected })
+            spStations.adapter = adapter
+        })
     }
 
     private fun setStationInfo(){
