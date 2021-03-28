@@ -24,7 +24,11 @@ class DatePickerFragment(private val _context: Context?): DialogFragment(), Date
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        val date = year.toString() + "/" + month.toString() + "/" + dayOfMonth.toString()
+        val date = year.toString() + "-" + convertNumberToString(month+1) + "-" + convertNumberToString(dayOfMonth)
         userModel.setDateSelected(date)
+    }
+
+    private fun convertNumberToString(n: Int): String{
+        return if (n < 10) "0" + n.toString() else n.toString()
     }
 }

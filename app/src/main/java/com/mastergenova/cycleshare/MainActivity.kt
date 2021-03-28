@@ -39,10 +39,12 @@ class MainActivity : AppCompatActivity() {
     private fun getUserInfo(){
         val acct = GoogleSignIn.getLastSignedInAccount(this)
         if(acct != null){
-            val userAccount = Account(acct.displayName,
-                                        acct.email,
-                                        acct.id,
-                                        acct.photoUrl)
+            val userAccount = Account(acct.givenName,
+                    acct.familyName,
+                    acct.displayName,
+                    acct.email,
+                    acct.id,
+                    acct.photoUrl)
             userModel.setAccountInfo(userAccount)
         }
     }

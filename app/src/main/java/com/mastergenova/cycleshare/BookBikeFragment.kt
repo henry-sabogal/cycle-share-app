@@ -5,10 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
+import androidx.core.view.get
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.mastergenova.cycleshare.adapters.SpinnerStationsAdapter
@@ -28,7 +26,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [BookBikeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class BookBikeFragment : Fragment() {
+class BookBikeFragment : Fragment(), AdapterView.OnItemSelectedListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -42,8 +40,6 @@ class BookBikeFragment : Fragment() {
     private lateinit var tvSelectedTime: TextView
 
     private lateinit var stationSelected: StationsAPIResponse
-    private lateinit var bikeSelected: Bike
-    private lateinit var account: Account
 
     private lateinit var adapter: SpinnerStationsAdapter
 
@@ -84,6 +80,13 @@ class BookBikeFragment : Fragment() {
             showDateTimePickerDialog()
         }
 
+        val btnBookTrip = root.findViewById<Button>(R.id.btnBook)
+        btnBookTrip.setOnClickListener {
+            userModel.bookTrip()
+        }
+
+        spStations.onItemSelectedListener = this
+
         setStationInfo()
         setBikeInfo()
         setUserInfo()
@@ -99,6 +102,15 @@ class BookBikeFragment : Fragment() {
         })
 
         return root
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        val station: StationsAPIResponse = parent?.getItemAtPosition(position) as StationsAPIResponse
+        userModel.selectToStation(station)
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        //nothin selected
     }
 
     private fun fetchStations(){
@@ -117,14 +129,12 @@ class BookBikeFragment : Fragment() {
 
     private fun setBikeInfo(){
         userModel.selectedBike.observe(viewLifecycleOwner, Observer<Bike> { bike ->
-            this.bikeSelected = bike
             tvBikeName.text = bike.name
         })
     }
 
     private fun setUserInfo(){
         userModel.userInfo.observe(viewLifecycleOwner, Observer<Account> { account ->
-            this.account = account
             tvName.text = account.displayName
             tvEmail.text = account.email
         })

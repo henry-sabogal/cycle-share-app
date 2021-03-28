@@ -23,7 +23,11 @@ class TimePickerFragment: DialogFragment(), TimePickerDialog.OnTimeSetListener {
     }
 
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-        val time = hourOfDay.toString() + ":" + minute.toString()
+        val time = convertNumberToString(hourOfDay) + ":" + convertNumberToString(minute) + ":00"
         userModel.setTimeSelected(time)
+    }
+
+    private fun convertNumberToString(n: Int): String{
+        return if (n < 10) "0" + n.toString() else n.toString()
     }
 }
