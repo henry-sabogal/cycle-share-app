@@ -21,6 +21,8 @@ class UserModel : ViewModel(){
         }
     }
 
+    val userTrips = MutableLiveData<List<TripUser>>()
+
     val selectedDate = MutableLiveData<String>()
     val selectedTime = MutableLiveData<String>()
     val toSelectedStation = MutableLiveData<StationsAPIResponse>()
@@ -103,6 +105,22 @@ class UserModel : ViewModel(){
                 "",
                 false
         )
+    }
+
+    fun fetchUserTrips(idGmail: String?){
+        APIClient()
+                .getAPIService()
+                .tripsByUser(idGmail)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onNext = { response ->
+                            userTrips.value = response
+                        },
+                        onError = {
+                            e -> e.printStackTrace()
+                        }
+                )
     }
 
     private fun bookTripAPI(trip: Trip){
