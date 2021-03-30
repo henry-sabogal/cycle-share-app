@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.mastergenova.cycleshare.R
 import com.mastergenova.cycleshare.models.Bike
@@ -28,6 +29,11 @@ class BikesByStationAdapter (private val context: Context?,
         fun bindView(bike: Bike?){
             name.text = bike?.name
             state.text = bike?.state
+
+            when(bike?.state){
+                "Available" -> state.setTextColor(ContextCompat.getColor(context!!, R.color.teal_700))
+                "Booked" -> state.setTextColor(ContextCompat.getColor(context!!, R.color.red))
+            }
             itemView.setOnClickListener {
                 onClickBikeSubject.onNext(Pair(itemView, bike))
             }

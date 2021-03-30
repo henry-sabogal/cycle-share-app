@@ -11,4 +11,5 @@
     <color name="background">#f5f0f0</color>
     <color name="title">#007bff</color>
     <color name="subtitle">#6c757d</color>
+    <color name="red">#FF0000</color>
 </resources>

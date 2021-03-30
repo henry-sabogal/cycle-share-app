@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -89,8 +90,12 @@ class BikesFragment : Fragment(), OnMapReadyCallback {
         onClickBikeSubject.filter {
             it.second != null
         }.subscribeBy {
-            userModel.selectBike(it.second!!)
-            this.findNavController().navigate(R.id.action_bikesFragment_to_bookBikeFragment)
+            if(it.second?.state == "Available"){
+                userModel.selectBike(it.second!!)
+                this.findNavController().navigate(R.id.action_bikesFragment_to_bookBikeFragment)
+            }else{
+                Toast.makeText(context, "This bike is not available, please select another bike.", Toast.LENGTH_LONG).show()
+            }
         }
 
         adapter = BikesByStationAdapter(context, onClickBikeSubject)
