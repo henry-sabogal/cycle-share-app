@@ -82,8 +82,6 @@ class StationsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowC
         adapter = StationAdapter(context, onClickStationSubject)
         rvStations.adapter = adapter
 
-        fetchStations()
-
         return root
     }
 
@@ -93,6 +91,9 @@ class StationsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowC
         this.googleMap = googleMap
         this.googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(seatle, 10f))
         this.googleMap?.setOnInfoWindowClickListener(this)
+
+        fetchStations()
+        refreshData()
     }
 
     override fun onInfoWindowClick(marker: Marker?) {
@@ -124,6 +125,15 @@ class StationsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowC
                 e -> e.printStackTrace()
             }
         )
+    }
+
+    private fun refreshData(){
+        userModel.refresh.observe(viewLifecycleOwner, Observer<Boolean> { refresh ->
+            if(refresh) {
+                userModel.loadStationsList()
+                userModel.setRefresStationsData(false)
+            }
+        })
     }
 
     companion object {

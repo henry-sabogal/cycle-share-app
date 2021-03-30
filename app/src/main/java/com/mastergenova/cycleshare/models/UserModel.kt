@@ -25,6 +25,9 @@ class UserModel : ViewModel(){
     val selectedTime = MutableLiveData<String>()
     val toSelectedStation = MutableLiveData<StationsAPIResponse>()
 
+    val tripAPIResponse = MutableLiveData<TripAPIResponse>()
+    val refresh = MutableLiveData<Boolean>()
+
     fun logout(value: Boolean){
         signOut.value = value
     }
@@ -47,6 +50,10 @@ class UserModel : ViewModel(){
 
     fun setTimeSelected(time: String){
         selectedTime.value = time
+    }
+
+    fun setRefresStationsData(refresh: Boolean){
+        this.refresh.value = refresh
     }
 
     fun getStationsList(): LiveData<List<StationsAPIResponse>>{
@@ -73,7 +80,7 @@ class UserModel : ViewModel(){
         bookTripAPI(trip)
     }
 
-    private fun loadStationsList(){
+    fun loadStationsList(){
         APIClient()
                 .getAPIService()
                 .getStations()
@@ -89,6 +96,15 @@ class UserModel : ViewModel(){
                 )
     }
 
+    fun resetTripAPIResponse(){
+        tripAPIResponse.value = TripAPIResponse(
+                "",
+                0,
+                "",
+                false
+        )
+    }
+
     private fun bookTripAPI(trip: Trip){
         APIClient()
                 .getAPIService()
@@ -97,8 +113,7 @@ class UserModel : ViewModel(){
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onNext = { response ->
-                            System.out.println("Response Trip api")
-                            System.out.println(response.toString())
+                            tripAPIResponse.value = response
                         },
                         onError = {
                             e -> e.printStackTrace()

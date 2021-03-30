@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -15,8 +17,9 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.mastergenova.cycleshare.models.Account
 import com.mastergenova.cycleshare.models.UserModel
+import com.mastergenova.cycleshare.utils.BookSuccessDialogFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), BookSuccessDialogFragment.BookSuccessDialogListener {
 
     private val userModel: UserModel by viewModels()
 
@@ -34,6 +37,11 @@ class MainActivity : AppCompatActivity() {
         })
 
         getUserInfo()
+    }
+
+    override fun onDialogOkClick(dialog: DialogFragment) {
+        userModel.setRefresStationsData(true)
+        findNavController(R.id.nav_host_fragment).navigate(R.id.stationsFragment)
     }
 
     private fun getUserInfo(){

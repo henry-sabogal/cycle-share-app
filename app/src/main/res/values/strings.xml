@@ -24,4 +24,7 @@
     <string name="select_date">Select a date for the trip</string>
 
     <string name="select_station">Select a station</string>
+
+    <string name="book_success">You have booked a bike to transport yourself.</string>
+    <string name="ok">OK</string>
 </resources>

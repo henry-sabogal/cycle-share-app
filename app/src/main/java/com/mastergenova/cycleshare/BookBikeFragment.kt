@@ -7,12 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.get
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.mastergenova.cycleshare.adapters.SpinnerStationsAdapter
 import com.mastergenova.cycleshare.models.Account
 import com.mastergenova.cycleshare.models.Bike
+import com.mastergenova.cycleshare.models.TripAPIResponse
 import com.mastergenova.cycleshare.models.UserModel
+import com.mastergenova.cycleshare.utils.BookSuccessDialogFragment
 import com.mastergenova.cycleshare.utils.DatePickerFragment
 import com.mastergenova.cycleshare.utils.TimePickerFragment
 
@@ -65,6 +69,11 @@ class BookBikeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         tvSelectedDate = root.findViewById(R.id.tvSelectedDate)
         tvSelectedTime = root.findViewById(R.id.tvSelectedTime)
 
+        tvSelectedTime.text = ""
+        tvSelectedDate.text = ""
+
+        spStations.onItemSelectedListener = this
+
         val btnBack = root.findViewById<ImageButton>(R.id.btnBack)
         btnBack.setOnClickListener {
             activity?.onBackPressed()
@@ -82,10 +91,15 @@ class BookBikeFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         val btnBookTrip = root.findViewById<Button>(R.id.btnBook)
         btnBookTrip.setOnClickListener {
-            userModel.bookTrip()
+            if(!tvSelectedDate.text.equals("")
+                    && !tvSelectedTime.text.equals("")
+                    && spStations.selectedItem != null){
+                        it.isClickable = false
+                        userModel.bookTrip()
+            }else{
+                Toast.makeText(context, "Please select data, time and one station for the trip.", Toast.LENGTH_LONG).show()
+            }
         }
-
-        spStations.onItemSelectedListener = this
 
         setStationInfo()
         setBikeInfo()
@@ -101,7 +115,15 @@ class BookBikeFragment : Fragment(), AdapterView.OnItemSelectedListener {
             tvSelectedTime.text = time
         })
 
+        showAlertDialog()
+
         return root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        tvSelectedTime.text = ""
+        tvSelectedDate.text = ""
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -146,6 +168,16 @@ class BookBikeFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun showDateTimePickerDialog(){
         DatePickerFragment(context).show(childFragmentManager, "datePicker")
+    }
+
+    private fun showAlertDialog(){
+        userModel.tripAPIResponse.observe(viewLifecycleOwner, Observer<TripAPIResponse> { tripResponse ->
+            if(tripResponse.success){
+                val alert = BookSuccessDialogFragment()
+                alert.show(childFragmentManager, "alertDialog")
+                userModel.resetTripAPIResponse()
+            }
+        })
     }
 
     companion object {
