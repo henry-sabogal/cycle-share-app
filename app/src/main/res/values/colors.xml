@@ -12,4 +12,5 @@
     <color name="title">#007bff</color>
     <color name="subtitle">#6c757d</color>
     <color name="red">#FF0000</color>
+    <color name="splash_screen">#0702b4</color>
 </resources>

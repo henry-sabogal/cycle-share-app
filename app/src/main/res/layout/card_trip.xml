@@ -21,6 +21,14 @@
             android:paddingLeft="16dp"
             android:orientation="horizontal">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_directions_bike_white_36"
+                android:background="@color/title"
+                android:padding="5dp"
+                />
+
             <TextView
                 android:id="@+id/tvIdTitle"
                 android:layout_width="wrap_content"
@@ -28,6 +36,8 @@
                 android:text="@string/id_trip_title"
                 android:textColor="@color/title"
                 android:textSize="14sp"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
                 android:textStyle="bold"
                 />
 
@@ -37,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/teal_700"
                 android:layout_marginStart="16dp"
+                android:layout_gravity="center"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 />
@@ -50,22 +61,24 @@
 
             <TextView
                 android:id="@+id/tvStateTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/state_title"
                 android:textColor="@color/title"
                 android:textSize="14sp"
+                android:layout_weight="1"
                 android:textStyle="bold"
                 />
 
             <TextView
                 android:id="@+id/tvState"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/teal_700"
                 android:layout_marginStart="16dp"
                 android:textSize="14sp"
                 android:textStyle="bold"
+                android:layout_weight="1"
                 />
         </LinearLayout>
 
@@ -77,22 +90,24 @@
 
             <TextView
                 android:id="@+id/tvDateTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/trip_date_title"
                 android:textColor="@color/title"
                 android:textSize="14sp"
                 android:textStyle="bold"
+                android:layout_weight="1"
                 />
 
             <TextView
                 android:id="@+id/tvDate"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/teal_700"
                 android:layout_marginStart="16dp"
                 android:textSize="14sp"
                 android:textStyle="bold"
+                android:layout_weight="1"
                 />
         </LinearLayout>
 
@@ -104,22 +119,24 @@
 
             <TextView
                 android:id="@+id/tvTimeTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/trip_time_title"
                 android:textColor="@color/title"
                 android:textSize="14sp"
                 android:textStyle="bold"
+                android:layout_weight="1"
                 />
 
             <TextView
                 android:id="@+id/tvTime"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/teal_700"
                 android:layout_marginStart="16dp"
                 android:textSize="14sp"
                 android:textStyle="bold"
+                android:layout_weight="1"
                 />
         </LinearLayout>
 
@@ -131,22 +148,24 @@
 
             <TextView
                 android:id="@+id/tvBikeTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/bike_title"
                 android:textColor="@color/title"
                 android:textSize="14sp"
                 android:textStyle="bold"
+                android:layout_weight="1"
                 />
 
             <TextView
                 android:id="@+id/tvBike"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/teal_700"
                 android:layout_marginStart="16dp"
                 android:textSize="14sp"
                 android:textStyle="bold"
+                android:layout_weight="1"
                 />
         </LinearLayout>
 
@@ -158,22 +177,24 @@
 
             <TextView
                 android:id="@+id/tvFromStationTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/station_title"
                 android:textColor="@color/title"
                 android:textSize="14sp"
                 android:textStyle="bold"
+                android:layout_weight="1"
                 />
 
             <TextView
                 android:id="@+id/tvFromStation"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/teal_700"
                 android:layout_marginStart="16dp"
                 android:textSize="14sp"
                 android:textStyle="bold"
+                android:layout_weight="1"
                 />
         </LinearLayout>
 
@@ -185,22 +206,24 @@
 
             <TextView
                 android:id="@+id/tvToStationTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/to_station"
                 android:textColor="@color/title"
                 android:textSize="14sp"
                 android:textStyle="bold"
+                android:layout_weight="1"
                 />
 
             <TextView
                 android:id="@+id/tvToStation"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/teal_700"
                 android:layout_marginStart="16dp"
                 android:textSize="14sp"
                 android:textStyle="bold"
+                android:layout_weight="1"
                 />
         </LinearLayout>
     </LinearLayout>

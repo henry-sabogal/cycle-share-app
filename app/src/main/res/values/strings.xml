@@ -27,10 +27,10 @@
 
     <string name="book_success">You have booked a bike to transport yourself.</string>
     <string name="ok">OK</string>
-    
+
     <string name="id_trip_title">Trip ID: </string>
     <string name="state_title">State: </string>
     <string name="trip_date_title">Trip Date: </string>
     <string name="trip_time_title">Trip Time: </string>
-    
+
 </resources>

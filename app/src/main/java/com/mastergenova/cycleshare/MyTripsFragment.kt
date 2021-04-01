@@ -35,6 +35,8 @@ class MyTripsFragment : Fragment() {
     lateinit var adapter: UserTripsAdapter
     lateinit var layoutManager: RecyclerView.LayoutManager
 
+    lateinit var user: Account
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -61,10 +63,16 @@ class MyTripsFragment : Fragment() {
         fetchTrips()
 
         userModel.userInfo.observe(viewLifecycleOwner, Observer<Account> { user ->
+            this.user = user
             userModel.fetchUserTrips(user.id)
         })
 
         return root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        userModel.fetchUserTrips(this.user.id)
     }
 
     private fun fetchTrips(){
