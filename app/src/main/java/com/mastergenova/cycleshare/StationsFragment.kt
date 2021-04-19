@@ -98,9 +98,6 @@ class StationsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowC
 
     override fun onInfoWindowClick(marker: Marker?) {
         Toast.makeText(context, marker?.title, Toast.LENGTH_LONG).show()
-
-        val action = StationsFragmentDirections.actionStationsFragmentToBikesFragment(1)
-        this.findNavController().navigate(action);
     }
 
     private fun fetchStations(){

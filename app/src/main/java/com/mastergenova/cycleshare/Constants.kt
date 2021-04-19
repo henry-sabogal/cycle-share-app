@@ -7,4 +7,6 @@ object Constants {
     const val BIKESBYSTATION = "station/{id}"
     const val BOOKTRIP = "trip/"
     const val TRIPSBYUSER = "trip/user/{id_gmail}"
+
+    const val PREFS_APP = "cycleshare_preferences"
 }

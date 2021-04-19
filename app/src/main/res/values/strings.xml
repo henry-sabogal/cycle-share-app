@@ -33,4 +33,7 @@
     <string name="trip_date_title">Trip Date: </string>
     <string name="trip_time_title">Trip Time: </string>
 
+    <string name="change_profile_picture">Change your profile image</string>
+    <string name="use_google_picture">Use your Google account picture</string>
+
 </resources>

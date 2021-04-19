@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/imvPhotoProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="250dp"
         android:layout_gravity="center"
         android:src="@drawable/pngegg"
         />
@@ -30,6 +30,23 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnChangeImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/change_profile_picture"
+                />
+
+            <Switch
+                android:id="@+id/toggleButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/use_google_picture"
+                android:textStyle="italic"
+                android:textSize="14sp"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -84,7 +101,6 @@
                 />
 
         </LinearLayout>
-
 
     </androidx.cardview.widget.CardView>
 </LinearLayout>
