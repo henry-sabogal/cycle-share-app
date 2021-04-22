@@ -143,7 +143,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun createImageFile(): File{
-        val timeStamp = SimpleDateFormat.getDateTimeInstance().format(Date())
+        val timeStamp = "my_custom_photo"
         val storageDir = context?.getExternalFilesDir(null)
 
         return File.createTempFile(

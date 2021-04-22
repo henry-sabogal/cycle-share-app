@@ -53,8 +53,6 @@ class LoginActivity : AppCompatActivity() {
     private fun handleSignInResult(completedTask:Task<GoogleSignInAccount>){
         try {
             val account = completedTask.getResult(ApiException::class.java)
-            System.out.println("SignInResult")
-            System.out.println(account?.email)
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }catch (e:ApiException){
